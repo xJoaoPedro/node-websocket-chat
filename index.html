@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chat com Socket.io</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            var socket = io();
+            var form = document.getElementById('form');
+            var input = document.getElementById('input');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (input.value) {
+                    socket.emit('chat message', input.value);
+                    input.value = '';
+                }
+            });
+
+            socket.on('chat message', function (data) {
+                const item = document.createElement('div');
+                item.innerHTML = data.text;
+                if (data.id === socket.id) {
+                    item.className = 'selfMsg';
+                } else {
+                    const sound = new Audio('/assets/1102.MP3');
+                    sound.play()
+                    item.className = 'otherMsg';
+                }
+
+                document.getElementById('messages').appendChild(item);
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+        });
+    </script>
+    <style>
+        .selfMsg {
+            background-color: lightgray;
+            max-width: 400px;
+            align-self: flex-end;
+            padding: 5px 10px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .otherMsg {
+            background-color: lightskyblue;
+            max-width: 400px;
+            align-self: flex-start;
+            padding: 5px 10px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="messages" style="display: flex; flex-direction: column; width: 600px;"></div>
+    <form id="form" action="">
+        <input id="input" autocomplete="off" /><button>Enviar</button>
+    </form>
+    <audio id="myAudio" src="/assets/1102.MP3"></audio>
+</body>
+
+</html>
