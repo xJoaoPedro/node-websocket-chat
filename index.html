@@ -6,10 +6,15 @@
     <title>Chat com Socket.io</title>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             var socket = io();
             var form = document.getElementById('form');
             var input = document.getElementById('input');
+            const customerWallets = await fetch('/api/v1/customer-wallets')
+                .then(response => response.json())
+                .then(data => data.customerWallets.data)
+
+            console.log(customerWallets)
 
             form.addEventListener('submit', function (e) {
                 e.preventDefault();

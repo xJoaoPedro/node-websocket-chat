@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/xJoaoPedro/node-websocket-chat#readme",
   "dependencies": {
-    "express": "^5.1.0",
-    "socket.io": "^4.8.1"
+    "body-parser": "^1.19.0",
+    "config": "^3.2.3",
+    "consign": "^0.1.6",
+    "express": "^4.17.1",
+    "socket.io": "^4.8.1",
+    "uuid": "^3.3.3"
   }
 }

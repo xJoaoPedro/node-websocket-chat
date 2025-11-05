@@ -1,8 +1,10 @@
+const { prototype } = require('events');
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
+const app = require('./config/express')();
+const port = app.get('port');
 
-const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
@@ -24,7 +26,6 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+server.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });
